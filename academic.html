@@ -4,19 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teaching & Supervision | Dr. Xiaoou Li</title>
-  <script>
-    /* User theme preference: default light, saved choice persists across pages. */
-    (function () {
-      try {
-        var savedTheme = localStorage.getItem('site-theme');
-        if (savedTheme === 'dark') {
-          document.documentElement.classList.add('night-mode');
-        }
-      } catch (error) {
-        /* Keep light mode if localStorage is unavailable. */
-      }
-    })();
-  </script>
+  
   <link rel="stylesheet" href="style.css">
   <style>
   .container ol { padding-left: 1.5rem; }
@@ -29,13 +17,23 @@
 </head>
 <body>
 <header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="research.html">Research &amp; Projects</a>
-    <a href="professional.html">Professional Experience</a>
-    <a href="academic.html">Teaching &amp; Supervision</a>
-    <a href="publications.html">Publications</a>
-    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
+  <nav class="site-nav">
+    <a href="index.html" class="nav-brand">Xiaoou Li</a>
+
+    <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="research.html">Research &amp; Projects</a>
+      <a href="professional.html">Professional Experience</a>
+      <a href="academic.html">Teaching &amp; Supervision</a>
+      <a href="publications.html">Publications</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Dark mode</button>
+    </div>
   </nav>
 </header>
 <div class="container">
@@ -135,35 +133,46 @@
 
 <script>
   (function () {
-    var storageKey = 'site-theme';
-    var root = document.documentElement;
-    var toggleButton = document.querySelector('[data-theme-toggle]');
+    const root = document.documentElement;
+    const themeToggle = document.querySelector('.theme-toggle');
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const storageKey = 'site-theme';
 
-    if (!toggleButton) {
-      return;
-    }
+    function setTheme(theme) {
+      const isDark = theme === 'dark';
+      root.classList.toggle('night-mode', isDark);
 
-    function updateToggleLabel() {
-      var isDark = root.classList.contains('night-mode');
-      toggleButton.textContent = isDark ? 'Light mode' : 'Dark mode';
-      toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      toggleButton.setAttribute('aria-pressed', String(isDark));
-    }
-
-    updateToggleLabel();
-
-    toggleButton.addEventListener('click', function () {
-      var shouldUseDark = !root.classList.contains('night-mode');
-      root.classList.toggle('night-mode', shouldUseDark);
-
-      try {
-        localStorage.setItem(storageKey, shouldUseDark ? 'dark' : 'light');
-      } catch (error) {
-        /* Theme still changes for the current page if localStorage is unavailable. */
+      if (themeToggle) {
+        themeToggle.textContent = isDark ? 'Light mode' : 'Dark mode';
+        themeToggle.setAttribute('aria-pressed', String(isDark));
       }
+    }
 
-      updateToggleLabel();
-    });
+    const savedTheme = localStorage.getItem(storageKey) || 'light';
+    setTheme(savedTheme);
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', function () {
+        const nextTheme = root.classList.contains('night-mode') ? 'light' : 'dark';
+        localStorage.setItem(storageKey, nextTheme);
+        setTheme(nextTheme);
+      });
+    }
+
+    if (navToggle && navLinks) {
+      navToggle.addEventListener('click', function () {
+        const isOpen = navLinks.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('is-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
   })();
 </script>
 </body>
