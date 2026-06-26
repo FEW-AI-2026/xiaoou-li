@@ -23,9 +23,3 @@ Important: keep the existing assets in the same folder, especially:
 - Xiaoou_Li_CV.pdf
 
 Those assets were referenced by the original page but were not included in the uploaded files.
-
-
-User-controlled dark mode:
-- A Dark mode / Light mode button was added to the shared navigation.
-- The selected theme is saved with localStorage, so the choice persists across pages and future visits.
-- The theme no longer changes automatically by time of day.
