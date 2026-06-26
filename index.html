@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dr. Xiaoou Li | Home</title>
+  <script>
+    /* User theme preference: default light, saved choice persists across pages. */
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('site-theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('night-mode');
+        }
+      } catch (error) {
+        /* Keep light mode if localStorage is unavailable. */
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="style.css">
   
 </head>
@@ -15,6 +28,7 @@
     <a href="professional.html">Professional Experience</a>
     <a href="academic.html">Teaching &amp; Supervision</a>
     <a href="publications.html">Publications</a>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
   </nav>
 </header>
 <section class="hero">
@@ -91,5 +105,39 @@
 </div>
 
 <footer><p>© 2026 Dr. Xiaoou Li | Center of Research and Advanced Studies (Cinvestav)</p></footer>
+
+<script>
+  (function () {
+    var storageKey = 'site-theme';
+    var root = document.documentElement;
+    var toggleButton = document.querySelector('[data-theme-toggle]');
+
+    if (!toggleButton) {
+      return;
+    }
+
+    function updateToggleLabel() {
+      var isDark = root.classList.contains('night-mode');
+      toggleButton.textContent = isDark ? 'Light mode' : 'Dark mode';
+      toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      toggleButton.setAttribute('aria-pressed', String(isDark));
+    }
+
+    updateToggleLabel();
+
+    toggleButton.addEventListener('click', function () {
+      var shouldUseDark = !root.classList.contains('night-mode');
+      root.classList.toggle('night-mode', shouldUseDark);
+
+      try {
+        localStorage.setItem(storageKey, shouldUseDark ? 'dark' : 'light');
+      } catch (error) {
+        /* Theme still changes for the current page if localStorage is unavailable. */
+      }
+
+      updateToggleLabel();
+    });
+  })();
+</script>
 </body>
 </html>
