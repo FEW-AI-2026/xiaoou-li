@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Xiaoou Li | Home</title>
+  <script>
+    /* User theme preference: default light, saved choice persists across pages. */
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('site-theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('night-mode');
+        }
+      } catch (error) {
+        /* Keep light mode if localStorage is unavailable. */
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body class="home-page">
+<header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="research.html">Research &amp; Projects</a>
+    <a href="professional.html">Professional Experience</a>
+    <a href="academic.html">Teaching &amp; Supervision</a>
+    <a href="publications.html">Publications</a>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode" aria-pressed="false">Dark mode</button>
+  </nav>
+</header>
+<section class="hero">
+  <img src="lixoPP.jpg" alt="Dr. Xiaoou Li" class="profile-img" width="139" height="147">
+  <h1>Xiaoou Li</h1>
+  <p class="hero-subtitle">Professor | Director of the Data Science Laboratory</p>
+  <p class="hero-description">
+    Research opportunities in Artificial Intelligence, Machine Learning, Data Science,
+    Robotics and Sustainable Systems at Cinvestav-IPN.
+  </p>
+  <p class="hero-location">
+    Departamento de Computación, Cinvestav-IPN (National Polytechnic Institute),<br>
+    Av IPN 2508, Mexico City, 07360, Mexico
+  </p>
+
+  <div class="hero-actions">
+    <a href="academic.html" class="btn-primary">Explore Thesis Supervision</a>
+    <a href="mailto:lixo@cs.cinvestav.mx?subject=Prospective%20thesis%20student" class="btn-secondary">Contact for Thesis Opportunities</a>
+  </div>
+
+  <div class="contact-links">
+    <a href="mailto:lixo@cs.cinvestav.mx">lixo@cs.cinvestav.mx</a>
+    <span>|</span>
+    <a href="https://scholar.google.com/citations?user=R9Td938AAAAJ" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+    <span>|</span>
+    <a href="https://www.scopus.com/authid/detail.uri?authorId=55993756400" target="_blank" rel="noopener noreferrer">Scopus</a>
+    <span>|</span>
+    <a href="Xiaoou_Li_CV.pdf" download><strong>Complete CV</strong></a>
+  </div>
+</section>
+
+<div class="container">
+  <div class="card">
+    <h2 class="section-title">Professional Affiliations &amp; Recognition</h2>
+    <ul>
+      <li><strong>Level 3</strong>, Mexico National System of Researchers (SNII) (Since 2001).</li>
+      <li><strong>Regular Member</strong>, Mexican Academy of Sciences (AMC) (Since 2008).</li>
+      <li><strong>50 Women in Robotics You Need to Know About</strong> (2022).</li>
+      <li><strong>Three Remarkable Women with Top-Flight Track Records</strong>, IEEE Systems, Man, and Cybernetics Society (2018).</li>
+      <li><strong>Senior Member</strong>, IEEE (Since 2007).</li>
+      <li>Board Member, Mexican Artificial Intelligence Society (SMIA) (2023-present).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Education</h2>
+    <ul>
+      <li>
+        <strong>Ph.D. in Automatic Control</strong>, Northeastern University, P. R. China, 1995.
+        <br><small><i>Thesis: Object oriented colored Petri nets model and its application in flexible manufacturing systems</i></small>
+      </li>
+      <li>
+        <strong>B.Sc. in Applied Mathematics</strong>, Northeastern University, P. R. China, 1991.
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2 class="section-title">Research Overview</h2>
+    <p>
+      Dr. Xiaoou Li leads the Data Science Laboratory at Cinvestav, where students work on
+      Artificial Intelligence, Machine Learning, Neural Networks, Petri Nets, Robotics and
+      Sustainable Systems.
+    </p>
+    <p>
+      Her research combines strong theoretical foundations with real-world applications in
+      energy, health, robotics, cyber-physical systems and data-driven decision making.
+    </p>
+    <p class="highlight-text">
+      Motivated Master's and Ph.D. students are welcome to explore thesis opportunities
+      related to intelligent systems and applied AI.
+    </p>
+  </div>
+</div>
+
+<footer><p>© 2026 Dr. Xiaoou Li | Center of Research and Advanced Studies (Cinvestav)</p></footer>
+
+<script>
+  (function () {
+    var storageKey = 'site-theme';
+    var root = document.documentElement;
+    var toggleButton = document.querySelector('[data-theme-toggle]');
+
+    if (!toggleButton) {
+      return;
+    }
+
+    function updateToggleLabel() {
+      var isDark = root.classList.contains('night-mode');
+      toggleButton.textContent = isDark ? 'Light mode' : 'Dark mode';
+      toggleButton.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      toggleButton.setAttribute('aria-pressed', String(isDark));
+    }
+
+    updateToggleLabel();
+
+    toggleButton.addEventListener('click', function () {
+      var shouldUseDark = !root.classList.contains('night-mode');
+      root.classList.toggle('night-mode', shouldUseDark);
+
+      try {
+        localStorage.setItem(storageKey, shouldUseDark ? 'dark' : 'light');
+      } catch (error) {
+        /* Theme still changes for the current page if localStorage is unavailable. */
+      }
+
+      updateToggleLabel();
+    });
+  })();
+</script>
+</body>
+</html>
